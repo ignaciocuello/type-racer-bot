@@ -1,0 +1,23 @@
+{
+  "name": "type-racer-bot",
+  "version": "1.0.0",
+  "description": "type-racer-bot",
+  "main": "index.js",
+  "dependencies": {
+    "selenium-webdriver": "^4.0.0-alpha.8"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ignaciocuello/type-racer-bot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ignaciocuello/type-racer-bot/issues"
+  },
+  "homepage": "https://github.com/ignaciocuello/type-racer-bot#readme"
+}
