@@ -7,9 +7,9 @@ const {Builder, By, until} = require('selenium-webdriver');
     //Enter a race in type racer, once it loads get the race's target text.
     await driver.get('https://play.typeracer.com/');
     await clickEnterRaceButton(driver);
-    const targetText = await getTargetText(driver);
+    const raceTargetText = await getRaceTargetText(driver);
 
-    console.log(targetText);
+    console.log(raceTargetText);
 
     async function waitAndFindElement(driver, locator) {
       const maxWaitTimeMs = 10 * 1000;
@@ -27,12 +27,12 @@ const {Builder, By, until} = require('selenium-webdriver');
       return await enterRaceButton.click();
     }
 
-    async function getTargetText(driver) {
-      const targetTextDivSelector =
+    async function getRaceTargetText(driver) {
+      const raceTargetTextDivSelector =
         'table.inputPanel > tbody > tr > td > table > tbody > tr > td > div > div';
-      const targetTextDiv =
-        await waitAndFindElement(driver, By.css(targetTextDivSelector));
-      const targetText = await targetTextDiv.getText();
-      return targetText;
+      const raceTargetTextDiv =
+        await waitAndFindElement(driver, By.css(raceTargetTextDivSelector));
+      const raceTargetText = await raceTargetTextDiv.getText();
+      return raceTargetText;
     }
 })();
