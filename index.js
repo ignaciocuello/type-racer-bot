@@ -4,14 +4,13 @@ const {Builder, By, until} = require('selenium-webdriver');
 (async function runTypeRacerBot() {
     const driver = await new Builder().forBrowser('chrome').build();
     
-    //Enter a race in type racer, once it loads get the race's target text.
     await driver.get('https://play.typeracer.com/');
-    await clickEnterRaceButton(driver);
+    await enterRace(driver);
     const raceTargetText = await getRaceTargetText(driver);
 
     console.log(raceTargetText);
 
-    async function clickEnterRaceButton(driver) {
+    async function enterRace(driver) {
       const enterRaceButton =
         await driver.wait(until.elementLocated(By.css('#gwt-uid-1 > a')));
       return await enterRaceButton.click();
