@@ -11,19 +11,9 @@ const {Builder, By, until} = require('selenium-webdriver');
 
     console.log(raceTargetText);
 
-    async function waitAndFindElement(driver, locator) {
-      const maxWaitTimeMs = 10 * 1000;
-
-      await driver.wait(until.elementLocated(locator, maxWaitTimeMs));
-      const element = await driver.findElement(locator);
-
-      return element;
-    }
-
     async function clickEnterRaceButton(driver) {
-      const enterRaceButtonSelector = '#gwt-uid-1 > a';
       const enterRaceButton =
-        await waitAndFindElement(driver, By.css(enterRaceButtonSelector));
+        await driver.wait(until.elementLocated(By.css('#gwt-uid-1 > a')));
       return await enterRaceButton.click();
     }
 
@@ -31,7 +21,7 @@ const {Builder, By, until} = require('selenium-webdriver');
       const raceTargetTextDivSelector =
         'table.inputPanel > tbody > tr > td > table > tbody > tr > td > div > div';
       const raceTargetTextDiv =
-        await waitAndFindElement(driver, By.css(raceTargetTextDivSelector));
+        await driver.wait(until.elementLocated(By.css(raceTargetTextDivSelector)));
       const raceTargetText = await raceTargetTextDiv.getText();
       return raceTargetText;
     }
