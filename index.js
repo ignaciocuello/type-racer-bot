@@ -13,9 +13,14 @@ const {Builder, By, until} = require('selenium-webdriver');
       await driver.wait(until.elementLocated(By.css('.txtInput')));
     await driver.wait(until.elementIsEnabled(textInput));
 
+    const sleep = (milliseconds) => {
+      return new Promise(resolve => setTimeout(resolve, milliseconds))
+    }
+
     for (raceTargetWord of raceTargetWords) {
       textInput.sendKeys(raceTargetWord + ' ');
       await textInput.getAttribute('maxlength');
+      await sleep(125);
     }
 
     console.log(raceTargetWords);
