@@ -7,11 +7,20 @@ const {Builder, By, until} = require('selenium-webdriver');
     await driver.get('https://play.typeracer.com/');
     await enterRace(driver);
     const raceTargetText = await getRaceTargetText(driver);
+    const raceTargetWords = raceTargetText.split(' ');
 
-    console.log(raceTargetText);
+    const textInput =
+      await driver.wait(until.elementLocated(By.css('.txtInput')));
+    await driver.wait(until.elementIsEnabled(textInput));
 
+    for (raceTargetWord of raceTargetWords) {
+      textInput.sendKeys(raceTargetWord + ' ');
+      await textInput.getAttribute('maxlength');
+    }
+
+    console.log(raceTargetWords);
   } finally {
-    await driver.quit();
+    //await driver.quit();
   }
 
   async function enterRace(driver) {
