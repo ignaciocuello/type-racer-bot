@@ -1,7 +1,17 @@
 const {Builder, By, until} = require('selenium-webdriver');
+const chrome = require('selenium-webdriver/chrome');
+const proxy = require('selenium-webdriver/proxy');
 
 (async function runTypeRacerBot() {
-  const driver = await new Builder().forBrowser('chrome').build();
+  const options = new chrome.Options();
+  options.addArguments('--proxy-server=http://localhost:8081');
+  options.addArguments('--ignore-ssl-errors=yes');
+  options.addArguments('--ignore-certificate-errors');
+  //options.setProxy(proxy.manual({http: 'localhost:8081'}));
+  const driver = await new Builder()
+    .forBrowser('chrome')
+    .setChromeOptions(options)
+    .build();
 
   try {
     await driver.get('https://play.typeracer.com/');
