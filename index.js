@@ -23,7 +23,6 @@ const {Builder, By, until} = require('selenium-webdriver');
       await sleep(125);
     }
 
-    console.log(raceTargetWords);
   } finally {
     //await driver.quit();
   }
