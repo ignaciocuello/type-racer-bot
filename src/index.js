@@ -7,7 +7,6 @@ const proxy = require('selenium-webdriver/proxy');
   options.addArguments('--proxy-server=http://localhost:8081');
   options.addArguments('--ignore-ssl-errors=yes');
   options.addArguments('--ignore-certificate-errors');
-  //options.setProxy(proxy.manual({http: 'localhost:8081'}));
   const driver = await new Builder()
     .forBrowser('chrome')
     .setChromeOptions(options)
@@ -27,6 +26,7 @@ const proxy = require('selenium-webdriver/proxy');
       return new Promise(resolve => setTimeout(resolve, milliseconds))
     }
 
+    //div.bodyWidgetHolder > table > tbody > tr > td > button.gwt-Button
     for (raceTargetWord of raceTargetWords) {
       textInput.sendKeys(raceTargetWord + ' ');
       await textInput.getAttribute('maxlength');
