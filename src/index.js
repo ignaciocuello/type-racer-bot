@@ -1,4 +1,5 @@
 const {Builder, By, until} = require('selenium-webdriver');
+const {HomePage} = require('./pom/HomePage.js');
 const chrome = require('selenium-webdriver/chrome');
 const proxy = require('selenium-webdriver/proxy');
 

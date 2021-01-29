@@ -1,5 +1,4 @@
 //TODO: learn proper commenting ettiquette
-//TODO: export this module
 /* Class representing the home page for https://play.typeracer.com/
 */
 class HomePage {
@@ -16,3 +15,5 @@ class HomePage {
   }
 
 }
+
+module.exports = HomePage;HomePage;
