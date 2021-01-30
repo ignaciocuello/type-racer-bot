@@ -18,4 +18,4 @@ class HomePage {
 
 }
 
-module.exports = HomePage;HomePage;
+module.exports = HomePage;
