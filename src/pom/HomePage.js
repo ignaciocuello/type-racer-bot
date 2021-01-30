@@ -1,3 +1,5 @@
+const {By, until} = require('selenium-webdriver');
+
 //TODO: learn proper commenting ettiquette
 /* Class representing the home page for https://play.typeracer.com/
 */

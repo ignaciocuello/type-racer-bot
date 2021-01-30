@@ -1,13 +1,13 @@
 const {Builder, By, until} = require('selenium-webdriver');
-const {HomePage} = require('./pom/HomePage.js');
+const HomePage = require('./pom/HomePage');
 const chrome = require('selenium-webdriver/chrome');
 const proxy = require('selenium-webdriver/proxy');
 
 (async function runTypeRacerBot() {
   const options = new chrome.Options();
-  options.addArguments('--proxy-server=http://localhost:8081');
-  options.addArguments('--ignore-ssl-errors=yes');
-  options.addArguments('--ignore-certificate-errors');
+  //options.addArguments('--proxy-server=http://localhost:8081');
+  //options.addArguments('--ignore-ssl-errors=yes');
+  //options.addArguments('--ignore-certificate-errors');
   const driver = await new Builder()
     .forBrowser('chrome')
     .setChromeOptions(options)
@@ -15,7 +15,10 @@ const proxy = require('selenium-webdriver/proxy');
 
   try {
     await driver.get('https://play.typeracer.com/');
-    await enterRace(driver);
+    const homePage = new HomePage(driver);
+
+    await homePage.enterRace(driver);
+
     const raceTargetText = await getRaceTargetText(driver);
     const raceTargetWords = raceTargetText.split(' ');
 
@@ -36,12 +39,6 @@ const proxy = require('selenium-webdriver/proxy');
 
   } finally {
     //await driver.quit();
-  }
-
-  async function enterRace(driver) {
-    const enterRaceButton =
-      await driver.wait(until.elementLocated(By.css('#gwt-uid-1 > a')));
-    return await enterRaceButton.click();
   }
 
   async function getRaceTargetText(driver) {
