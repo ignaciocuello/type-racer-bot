@@ -1,7 +1,8 @@
 const {Builder, By, until} = require('selenium-webdriver');
-const HomePage = require('./pom/HomePage');
 const chrome = require('selenium-webdriver/chrome');
 const proxy = require('selenium-webdriver/proxy');
+const HomePage = require('./pom/HomePage');
+const RacePage = require('./pom/RacePage');
 
 (async function runTypeRacerBot() {
   const options = new chrome.Options();
@@ -14,39 +15,14 @@ const proxy = require('selenium-webdriver/proxy');
     .build();
 
   try {
+    //TODO: get the 125 in racePage from the command line
     await driver.get('https://play.typeracer.com/');
     const homePage = new HomePage(driver);
+    const racePage = new RacePage(driver, 125);
 
     await homePage.enterRace(driver);
-
-    const raceTargetText = await getRaceTargetText(driver);
-    const raceTargetWords = raceTargetText.split(' ');
-
-    const textInput =
-      await driver.wait(until.elementLocated(By.css('.txtInput')));
-    await driver.wait(until.elementIsEnabled(textInput));
-
-    const sleep = (milliseconds) => {
-      return new Promise(resolve => setTimeout(resolve, milliseconds))
-    }
-
-    //div.bodyWidgetHolder > table > tbody > tr > td > button.gwt-Button
-    for (raceTargetWord of raceTargetWords) {
-      textInput.sendKeys(raceTargetWord + ' ');
-      await textInput.getAttribute('maxlength');
-      await sleep(125);
-    }
-
+    await racePage.typeTargetWords(driver);
   } finally {
-    //await driver.quit();
-  }
-
-  async function getRaceTargetText(driver) {
-    const raceTargetTextDivSelector =
-      'table.inputPanel > tbody > tr > td > table > tbody > tr > td > div > div';
-    const raceTargetTextDiv =
-      await driver.wait(until.elementLocated(By.css(raceTargetTextDivSelector)));
-    const raceTargetText = await raceTargetTextDiv.getText();
-    return raceTargetText;
+    await driver.quit();
   }
 })();

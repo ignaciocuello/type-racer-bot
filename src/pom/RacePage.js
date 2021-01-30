@@ -3,25 +3,26 @@ const {By, until} = require('selenium-webdriver');
 //Cheating Test button lol
 //div.bodyWidgetHolder > table > tbody > tr > td > button.gwt-Button
 class RacePage {
-
-  constructor(driver) {
-    this.driver = driver;
-    this.textInputBy = By.css('.txtInput');
+  
+  constructor(driver, wordTypingDelay) {
     this.targetTextDivBy =
       By.css('table.inputPanel > tbody > tr > td > table'
         + '> tbody > tr > td > div > div');
+    this.textInputBy = By.css('.txtInput');
+    this.wordTypingDelay = wordTypingDelay;
+    this.driver = driver;
   }
 
 
   async typeTargetWords(driver) {
-    const targetWords = await getTargetWords(driver);
+    const targetWords = await this.getTargetWords(driver);
     const textInput = await driver.wait(until.elementLocated(this.textInputBy));
 
     await driver.wait(until.elementIsEnabled(textInput));
-    await typeWordsInTextInput(targetWords, textInput);
+    await this.typeWordsInTextInput(targetWords, textInput);
   }
   
-  async function getTargetWords(driver) {
+  async getTargetWords(driver) {
     const targetTextDiv =
       await driver.wait(until.elementLocated(this.targetTextDivBy));
     const targetText = await targetTextDiv.getText();
@@ -30,18 +31,19 @@ class RacePage {
     return targetWords;
   }
 
-  async function typeWordsInTextInput(targetWords, textInput) {
-    for (targetWord of targetWords) {
+  async typeWordsInTextInput(targetWords, textInput) {
+    for (const targetWord of targetWords) {
       textInput.sendKeys(targetWord + ' ');
       
-      await waitUntilInputCanAcceptNextWord(textInput);
+      await this.waitUntilInputCanAcceptNextWord(textInput);
 
-      //slow down, so we don't get insta-banned
-      await this.sleep(125);
+      //delay until next word, to avoid going too fast (>400WPM) and getting
+      //instantly banned.
+      await this.sleep(this.wordTypingDelay);
     }
   }
 
-  async function waitUntilInputCanAcceptNextWord(textInput) {
+  async waitUntilInputCanAcceptNextWord(textInput) {
       await textInput.getAttribute('maxlength');
   }
 
